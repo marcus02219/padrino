@@ -27,7 +27,7 @@ class ApiRequest < Sequel::Model
     return false if auth_hash["signature"].blank?
 
     # check the HMAC SHA256 signature hash
-    return false unless OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha256'), secret, auth_hash["nonce"]) == auth_hash["signature"]
+    return false unless OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), secret, auth_hash["nonce"]) == auth_hash["signature"]
 
     # check if the nonce already exists in the database
     return false unless self.where(id: auth_hash["nonce"]).count == 0
